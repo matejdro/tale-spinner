@@ -85,11 +85,11 @@ class App extends Component<any, AudioScene> {
         );
     }
 
-    private playEffect(url: String) {
+    private playEffect(url: string) {
         this.setState({
                 ...this.state,
                 soundEffect: {
-                    url: "test_audio/wilhelm.wav",
+                    url: url,
                     paused: false,
                     playbackUuid: Math.random().toFixed(10)
                 }
