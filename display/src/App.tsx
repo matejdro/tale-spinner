@@ -19,6 +19,10 @@ class App extends Component<any, AudioScene> {
         return (
             <div className="App">
                 <AudioCoordinator {...this.state} /> <br/>
+
+                <button onClick={() => this.toggleMusicPause()}>Pause/Resume music</button>
+                <br/>
+                <br/>
                 <button onClick={() => this.playEffect()}>Scream!</button>
                 <br/>
                 <button onClick={() => this.toggleEffectPause()}>Pause/Resume scream</button>
@@ -43,6 +47,16 @@ class App extends Component<any, AudioScene> {
                     paused: false,
                     finishListener: () => this.onEffectEnded()
                 }
+            })
+        );
+    }
+
+    private toggleMusicPause() {
+        let music = this.state.music;
+
+        this.setState(
+            Object.assign({}, this.state, {
+                music: Object.assign({}, music, {paused: !music.paused})
             })
         );
     }
