@@ -40,8 +40,10 @@ class App extends Component<any, AudioScene> {
     }
 
     private onEffectEnded(): void {
-        this.setState(
-            Object.assign({}, this.state, {soundEffect: undefined})
+        this.setState({
+                ...this.state,
+                soundEffect: undefined
+            }
         );
     }
 
@@ -49,24 +51,27 @@ class App extends Component<any, AudioScene> {
     }
 
     private playEffect() {
-        this.setState(
-            Object.assign({}, this.state, {
+        this.setState({
+                ...this.state,
                 soundEffect: {
+                    ...this.state.music,
                     url: "test_audio/wilhelm.wav",
-                    paused: false,
-                    finishListener: () => this.onEffectEnded()
+                    paused: false
                 }
-            })
+            }
         );
     }
 
     private toggleMusicPause() {
         let music = this.state.music;
 
-        this.setState(
-            Object.assign({}, this.state, {
-                music: Object.assign({}, music, {paused: !music.paused})
-            })
+        this.setState({
+                ...this.state,
+                music: {
+                    ...music,
+                    paused: !music.paused
+                }
+            }
         );
     }
 
@@ -77,10 +82,13 @@ class App extends Component<any, AudioScene> {
         }
 
 
-        this.setState(
-            Object.assign({}, this.state, {
-                soundEffect: Object.assign({}, effect, {paused: !effect.paused})
-            })
+        this.setState({
+                ...this.state,
+                soundEffect: {
+                    ...effect,
+                    paused: !effect.paused
+                }
+            }
         );
     }
 }

@@ -11,7 +11,7 @@ class AudioCoordinator extends Component<AudioCoordinatorProps> {
         const playMusic = !musicState.paused && (this.props.soundEffect === undefined || this.props.soundEffect.paused);
 
         if (!playMusic !== musicState.paused) {
-            musicState = Object.assign({}, musicState, {paused: !playMusic})
+            musicState = {...musicState, paused: !playMusic}
         }
 
         players.push(<AudioPlayer finishListener={this.props.musicEndCallback} {...musicState} key="music"/>);
