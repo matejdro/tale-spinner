@@ -1,41 +1,49 @@
-import * as React from "react";
 import {Component} from "react";
-import {AudioPlayer} from "./AudioPlayer";
 import {AudioScene} from "../../common/src/AudioScene";
 import {AudioState} from "../../common/src/AudioState";
+import {AudioPlayer} from "./AudioPlayer";
 
 class AudioCoordinator extends Component<AudioCoordinatorProps> {
-    render(): React.ReactNode {
+
+    public static getAudioKey(audioState: AudioState) {
+        return `${audioState.url}|${audioState.playbackUuid}`;
+    }
+
+    public render(): React.ReactNode {
         let musicState = this.props.music;
-        const pauseMusic = musicState.paused || (this.props.soundEffect !== undefined && !this.props.soundEffect.paused);
+        const pauseMusic = musicState.paused ||
+            (this.props.soundEffect !== undefined && !this.props.soundEffect.paused);
 
         if (pauseMusic !== musicState.paused) {
-            musicState = {...musicState, paused: pauseMusic}
+            musicState = {...musicState, paused: pauseMusic};
         }
 
         return (
             <>
-                <AudioPlayer finishListener={this.props.musicEndCallback} {...musicState}
-                             key={AudioCoordinator.getAudioKey(musicState)}/>
+                <AudioPlayer
+                    key={AudioCoordinator.getAudioKey(musicState)}
+                    finishListener={this.props.musicEndCallback}
+                    {...musicState}
+                />
 
-                {this.props.soundEffect && (
-                    <AudioPlayer finishListener={this.props.effectEndCallback} {...this.props.soundEffect}
-                                 key={AudioCoordinator.getAudioKey(this.props.soundEffect)}/>
-                )
+                {
+                    this.props.soundEffect && (
+                        <AudioPlayer
+                            finishListener={this.props.effectEndCallback}
+                            key={AudioCoordinator.getAudioKey(this.props.soundEffect)}
+                            {...this.props.soundEffect}
+                        />
+                    )
                 }
             </>
         );
     }
-
-    static getAudioKey(audioState: AudioState) {
-        return `${audioState.url}|${audioState.playbackUuid}`
-    }
 }
 
 interface AudioCoordinatorProps extends AudioScene {
-    musicEndCallback: () => void
-    effectEndCallback: () => void
+    musicEndCallback: () => void;
+    effectEndCallback: () => void;
 
 }
 
-export default AudioCoordinator
+export default AudioCoordinator;

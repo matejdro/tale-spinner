@@ -1,0 +1,17 @@
+{
+  "name": "common",
+  "version": "1.0.0",
+  "description": "Common classes portion of the project",
+  "main": "index.js",
+  "dependencies": {
+    "tslint": "^5.12.1",
+    "tslint-react": "^3.6.0",
+    "typescript": "^3.3.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "lint": "tslint"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
-import './App.css';
-import AudioCoordinator from "./AudioCoordinator";
+import React, {Component} from "react";
 import {AudioScene} from "../../common/src/AudioScene";
+import "./App.css";
+import AudioCoordinator from "./AudioCoordinator";
 
 class App extends Component<any, AudioScene> {
     constructor(props: Readonly<any>) {
@@ -15,20 +15,21 @@ class App extends Component<any, AudioScene> {
 
         this.state = {
             music: {
-                url: "test_audio/music.mp3",
                 paused: false,
-                playbackUuid: Math.random().toFixed(10)
-            }
-        }
+                url: "test_audio/music.mp3",
+                playbackUuid: Math.random().toFixed(10),
+            },
+        };
     }
 
-    render() {
+    public render() {
         return (
             <div className="App">
                 <AudioCoordinator
                     musicEndCallback={this.onMusicEnded}
                     effectEndCallback={this.onEffectEnded}
-                    {...this.state} /> <br/>
+                    {...this.state}
+                /> <br/>
 
                 <button onClick={this.toggleMusicPause}>Pause/Resume music</button>
                 <br/>
@@ -43,8 +44,8 @@ class App extends Component<any, AudioScene> {
     private onEffectEnded(): void {
         this.setState({
                 ...this.state,
-                soundEffect: undefined
-            }
+                soundEffect: undefined,
+            },
         );
     }
 
@@ -56,32 +57,31 @@ class App extends Component<any, AudioScene> {
     }
 
     private toggleMusicPause() {
-        let music = this.state.music;
+        const music = this.state.music;
 
         this.setState({
                 ...this.state,
                 music: {
                     ...music,
-                    paused: !music.paused
-                }
-            }
+                    paused: !music.paused,
+                },
+            },
         );
     }
 
     private toggleEffectPause() {
-        let effect = this.state.soundEffect;
+        const effect = this.state.soundEffect;
         if (effect === undefined) {
             return;
         }
-
 
         this.setState({
                 ...this.state,
                 soundEffect: {
                     ...effect,
-                    paused: !effect.paused
-                }
-            }
+                    paused: !effect.paused,
+                },
+            },
         );
     }
 
@@ -89,11 +89,11 @@ class App extends Component<any, AudioScene> {
         this.setState({
                 ...this.state,
                 soundEffect: {
-                    url: url,
+                    url,
                     paused: false,
-                    playbackUuid: Math.random().toFixed(10)
-                }
-            }
+                    playbackUuid: Math.random().toFixed(10),
+                },
+            },
         );
     }
 }
