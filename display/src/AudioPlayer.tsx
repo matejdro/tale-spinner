@@ -7,7 +7,7 @@ export class AudioPlayer extends Component<AudioPlayerProps> {
     constructor(props: Readonly<AudioPlayerProps>) {
         super(props);
 
-        this.audio.addEventListener("ended", () => props.finishListener())
+        this.audio.addEventListener("ended", props.finishListener)
     }
 
     componentDidMount(): void {
