@@ -1,8 +1,9 @@
-import {Component} from "react";
-import {AudioPlayer, AudioPlayerProps} from "./AudioPlayer";
 import * as React from "react";
+import {Component} from "react";
+import {AudioPlayer} from "./AudioPlayer";
+import {AudioScene} from "./App";
 
-class AudioCoordinator extends Component<AudioScene> {
+class AudioCoordinator extends Component<AudioCoordinatorProps> {
     render(): React.ReactNode {
         const players = Array<React.ReactNode>();
 
@@ -13,10 +14,11 @@ class AudioCoordinator extends Component<AudioScene> {
             musicState = Object.assign({}, musicState, {paused: !playMusic})
         }
 
-        players.push(<AudioPlayer {...musicState} key="music" />);
+        players.push(<AudioPlayer finishListener={this.props.musicEndCallback} {...musicState} key="music"/>);
 
         if (this.props.soundEffect !== undefined) {
-            players.push(<AudioPlayer {...this.props.soundEffect} key="effects" />);
+            players.push(<AudioPlayer finishListener={this.props.effectEndCallback} {...this.props.soundEffect}
+                                      key="effects"/>);
         }
 
 
@@ -24,9 +26,10 @@ class AudioCoordinator extends Component<AudioScene> {
     }
 }
 
-export type AudioScene = {
-    music: AudioPlayerProps,
-    soundEffect?: AudioPlayerProps
+interface AudioCoordinatorProps extends AudioScene {
+    musicEndCallback: () => void
+    effectEndCallback: () => void
+
 }
 
 export default AudioCoordinator

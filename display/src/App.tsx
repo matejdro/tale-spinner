@@ -1,16 +1,22 @@
 import React, {Component} from 'react';
 import './App.css';
-import AudioCoordinator, {AudioScene} from "./AudioCoordinator";
+import AudioCoordinator from "./AudioCoordinator";
+import {AudioState} from "../../common/AudioState";
 
 class App extends Component<any, AudioScene> {
     constructor(props: Readonly<any>) {
         super(props);
 
+        this.onEffectEnded = this.onEffectEnded.bind(this);
+        this.onMusicEnded = this.onMusicEnded.bind(this);
+        this.playEffect = this.playEffect.bind(this);
+        this.toggleMusicPause = this.toggleMusicPause.bind(this);
+        this.toggleEffectPause = this.toggleEffectPause.bind(this);
+
         this.state = {
             music: {
                 url: "test_audio/music.mp3",
-                paused: false,
-                finishListener: () => this.onMusicEnded()
+                paused: false
             }
         }
     }
@@ -18,14 +24,17 @@ class App extends Component<any, AudioScene> {
     render() {
         return (
             <div className="App">
-                <AudioCoordinator {...this.state} /> <br/>
+                <AudioCoordinator
+                    musicEndCallback={this.onMusicEnded}
+                    effectEndCallback={this.onEffectEnded}
+                    {...this.state} /> <br/>
 
-                <button onClick={() => this.toggleMusicPause()}>Pause/Resume music</button>
+                <button onClick={this.toggleMusicPause}>Pause/Resume music</button>
                 <br/>
                 <br/>
-                <button onClick={() => this.playEffect()}>Scream!</button>
+                <button onClick={this.playEffect}>Scream!</button>
                 <br/>
-                <button onClick={() => this.toggleEffectPause()}>Pause/Resume scream</button>
+                <button onClick={this.toggleEffectPause}>Pause/Resume scream</button>
             </div>
         );
     }
@@ -74,6 +83,11 @@ class App extends Component<any, AudioScene> {
             })
         );
     }
+}
+
+export interface AudioScene {
+    music: AudioState,
+    soundEffect?: AudioState
 }
 
 export default App;
