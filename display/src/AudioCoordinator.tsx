@@ -5,24 +5,24 @@ import {AudioScene} from "./App";
 
 class AudioCoordinator extends Component<AudioCoordinatorProps> {
     render(): React.ReactNode {
-        const players = Array<React.ReactNode>();
-
         let musicState = this.props.music;
-        const playMusic = !musicState.paused && (this.props.soundEffect === undefined || this.props.soundEffect.paused);
+        const pauseMusic = musicState.paused || (this.props.soundEffect !== undefined && !this.props.soundEffect.paused);
 
-        if (!playMusic !== musicState.paused) {
-            musicState = {...musicState, paused: !playMusic}
+        if (pauseMusic !== musicState.paused) {
+            musicState = {...musicState, paused: pauseMusic}
         }
 
-        players.push(<AudioPlayer finishListener={this.props.musicEndCallback} {...musicState} key="music"/>);
+        return (
+            <>
+                <AudioPlayer finishListener={this.props.musicEndCallback} {...musicState}/>
 
-        if (this.props.soundEffect !== undefined) {
-            players.push(<AudioPlayer finishListener={this.props.effectEndCallback} {...this.props.soundEffect}
-                                      key="effects"/>);
-        }
-
-
-        return players;
+                {this.props.soundEffect && (
+                    <AudioPlayer finishListener={this.props.effectEndCallback} {...this.props.soundEffect}
+                                 key="effects"/>
+                )
+                }
+            </>
+        );
     }
 }
 
