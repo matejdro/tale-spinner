@@ -1,8 +1,8 @@
 import * as React from "react";
 import {Component} from "react";
 import {AudioPlayer} from "./AudioPlayer";
-import {AudioScene} from "./App";
-import {AudioState} from "../../common/AudioState";
+import {AudioScene} from "../../common/src/AudioScene";
+import {AudioState} from "../../common/src/AudioState";
 
 class AudioCoordinator extends Component<AudioCoordinatorProps> {
     render(): React.ReactNode {

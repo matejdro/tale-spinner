@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import './App.css';
 import AudioCoordinator from "./AudioCoordinator";
-import {AudioState} from "../../common/AudioState";
+import {AudioScene} from "../../common/src/AudioScene";
 
 class App extends Component<any, AudioScene> {
     constructor(props: Readonly<any>) {
@@ -96,11 +96,6 @@ class App extends Component<any, AudioScene> {
             }
         );
     }
-}
-
-export interface AudioScene {
-    music: AudioState,
-    soundEffect?: AudioState
 }
 
 export default App;
