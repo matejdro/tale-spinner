@@ -1,8 +1,14 @@
 import React, {Component} from "react";
 import {AudioState} from "../../common/AudioState";
 
-export class AudioPlayer extends Component<AudioState> {
+export class AudioPlayer extends Component<AudioPlayerProps> {
     private audio = new Audio();
+
+    constructor(props: Readonly<AudioPlayerProps>) {
+        super(props);
+
+        this.audio.addEventListener("ended", () => props.finishListener())
+    }
 
     componentDidMount(): void {
         this.updatePlayer(undefined)
@@ -29,4 +35,8 @@ export class AudioPlayer extends Component<AudioState> {
     render(): React.ReactNode {
         return null;
     }
+}
+
+export interface AudioPlayerProps extends AudioState {
+    finishListener : () => void
 }

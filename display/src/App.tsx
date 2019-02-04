@@ -7,13 +7,10 @@ class App extends Component<any, AudioScene> {
         super(props);
 
         this.state = {
-            music : {
+            music: {
                 url: "test_audio/music.mp3",
-                paused: false
-            },
-            soundEffect : {
-                url : "test_audio/wilhelm.wav",
-                paused: false
+                paused: false,
+                finishListener: () => this.onMusicEnded()
             }
         }
     }
@@ -21,8 +18,46 @@ class App extends Component<any, AudioScene> {
     render() {
         return (
             <div className="App">
-                <AudioCoordinator {...this.state} />
+                <AudioCoordinator {...this.state} /> <br/>
+                <button onClick={() => this.playEffect()}>Scream!</button>
+                <br/>
+                <button onClick={() => this.toggleEffectPause()}>Pause/Resume scream</button>
             </div>
+        );
+    }
+
+    private onEffectEnded(): void {
+        this.setState(
+            Object.assign({}, this.state, {soundEffect: undefined})
+        );
+    }
+
+    private onMusicEnded(): void {
+    }
+
+    private playEffect() {
+        this.setState(
+            Object.assign({}, this.state, {
+                soundEffect: {
+                    url: "test_audio/wilhelm.wav",
+                    paused: false,
+                    finishListener: () => this.onEffectEnded()
+                }
+            })
+        );
+    }
+
+    private toggleEffectPause() {
+        let effect = this.state.soundEffect;
+        if (effect === undefined) {
+            return;
+        }
+
+
+        this.setState(
+            Object.assign({}, this.state, {
+                soundEffect: Object.assign({}, effect, {paused: !effect.paused})
+            })
         );
     }
 }

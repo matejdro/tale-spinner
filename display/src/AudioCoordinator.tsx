@@ -1,6 +1,5 @@
 import {Component} from "react";
-import {AudioState} from "../../common/AudioState";
-import {AudioPlayer} from "./AudioPlayer";
+import {AudioPlayer, AudioPlayerProps} from "./AudioPlayer";
 import * as React from "react";
 
 class AudioCoordinator extends Component<AudioScene> {
@@ -26,8 +25,8 @@ class AudioCoordinator extends Component<AudioScene> {
 }
 
 export type AudioScene = {
-    music: AudioState,
-    soundEffect?: AudioState
+    music: AudioPlayerProps,
+    soundEffect?: AudioPlayerProps
 }
 
 export default AudioCoordinator

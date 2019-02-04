@@ -1,4 +1,4 @@
-export type AudioState = {
+export interface AudioState {
     url : string,
     paused : boolean
 }
