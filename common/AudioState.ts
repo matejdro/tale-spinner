@@ -1,4 +1,5 @@
 export interface AudioState {
     url : string,
-    paused : boolean
+    paused: boolean,
+    playbackUuid: string
 }

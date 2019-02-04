@@ -9,14 +9,15 @@ class App extends Component<any, AudioScene> {
 
         this.onEffectEnded = this.onEffectEnded.bind(this);
         this.onMusicEnded = this.onMusicEnded.bind(this);
-        this.playEffect = this.playEffect.bind(this);
+        this.startPlayingScreamEffect = this.startPlayingScreamEffect.bind(this);
         this.toggleMusicPause = this.toggleMusicPause.bind(this);
         this.toggleEffectPause = this.toggleEffectPause.bind(this);
 
         this.state = {
             music: {
                 url: "test_audio/music.mp3",
-                paused: false
+                paused: false,
+                playbackUuid: Math.random().toFixed(10)
             }
         }
     }
@@ -32,7 +33,7 @@ class App extends Component<any, AudioScene> {
                 <button onClick={this.toggleMusicPause}>Pause/Resume music</button>
                 <br/>
                 <br/>
-                <button onClick={this.playEffect}>Scream!</button>
+                <button onClick={this.startPlayingScreamEffect}>Scream!</button>
                 <br/>
                 <button onClick={this.toggleEffectPause}>Pause/Resume scream</button>
             </div>
@@ -50,16 +51,8 @@ class App extends Component<any, AudioScene> {
     private onMusicEnded(): void {
     }
 
-    private playEffect() {
-        this.setState({
-                ...this.state,
-                soundEffect: {
-                    ...this.state.music,
-                    url: "test_audio/wilhelm.wav",
-                    paused: false
-                }
-            }
-        );
+    private startPlayingScreamEffect() {
+        this.playEffect("test_audio/wilhelm.wav");
     }
 
     private toggleMusicPause() {
@@ -87,6 +80,18 @@ class App extends Component<any, AudioScene> {
                 soundEffect: {
                     ...effect,
                     paused: !effect.paused
+                }
+            }
+        );
+    }
+
+    private playEffect(url: String) {
+        this.setState({
+                ...this.state,
+                soundEffect: {
+                    url: "test_audio/wilhelm.wav",
+                    paused: false,
+                    playbackUuid: Math.random().toFixed(10)
                 }
             }
         );

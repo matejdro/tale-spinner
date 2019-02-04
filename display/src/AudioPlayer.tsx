@@ -26,6 +26,12 @@ export class AudioPlayer extends Component<AudioPlayerProps> {
         }
     }
 
+
+    componentWillUnmount(): void {
+        this.audio.pause();
+        this.audio.removeEventListener("ended", this.props.finishListener);
+    }
+
     render(): React.ReactNode {
         return null;
     }

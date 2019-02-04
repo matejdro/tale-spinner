@@ -2,6 +2,7 @@ import * as React from "react";
 import {Component} from "react";
 import {AudioPlayer} from "./AudioPlayer";
 import {AudioScene} from "./App";
+import {AudioState} from "../../common/AudioState";
 
 class AudioCoordinator extends Component<AudioCoordinatorProps> {
     render(): React.ReactNode {
@@ -14,15 +15,20 @@ class AudioCoordinator extends Component<AudioCoordinatorProps> {
 
         return (
             <>
-                <AudioPlayer finishListener={this.props.musicEndCallback} {...musicState} key={musicState.url}/>
+                <AudioPlayer finishListener={this.props.musicEndCallback} {...musicState}
+                             key={AudioCoordinator.getAudioKey(musicState)}/>
 
                 {this.props.soundEffect && (
                     <AudioPlayer finishListener={this.props.effectEndCallback} {...this.props.soundEffect}
-                                 key={this.props.soundEffect.url}/>
+                                 key={AudioCoordinator.getAudioKey(this.props.soundEffect)}/>
                 )
                 }
             </>
         );
+    }
+
+    static getAudioKey(audioState: AudioState) {
+        return `${audioState.url}|${audioState.playbackUuid}`
     }
 }
 
