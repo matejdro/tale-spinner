@@ -1,0 +1,1 @@
+Display portion of the project
