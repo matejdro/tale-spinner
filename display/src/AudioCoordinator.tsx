@@ -14,11 +14,11 @@ class AudioCoordinator extends Component<AudioCoordinatorProps> {
 
         return (
             <>
-                <AudioPlayer finishListener={this.props.musicEndCallback} {...musicState}/>
+                <AudioPlayer finishListener={this.props.musicEndCallback} {...musicState} key={musicState.url}/>
 
                 {this.props.soundEffect && (
                     <AudioPlayer finishListener={this.props.effectEndCallback} {...this.props.soundEffect}
-                                 key="effects"/>
+                                 key={this.props.soundEffect.url}/>
                 )
                 }
             </>
