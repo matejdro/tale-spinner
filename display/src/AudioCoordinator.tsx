@@ -1,4 +1,4 @@
-import {Component} from "react";
+import React, {Component} from "react";
 import {AudioScene} from "../../common/src/AudioScene";
 import {AudioState} from "../../common/src/AudioState";
 import {AudioPlayer} from "./AudioPlayer";
