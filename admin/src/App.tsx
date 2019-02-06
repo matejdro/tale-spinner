@@ -23,7 +23,7 @@ class App extends Component<{}, ValueHolder> {
                     <p>
 
                         <ButtonGroup>
-                            <Button text="Combat"/>
+                            <Button text="Combat" intent="primary"/>
                             <Button text="Generic"/>
                             <Button text="Horror"/>
                             <Button text="Tavern"/>
