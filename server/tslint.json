@@ -5,6 +5,7 @@
     "object-literal-sort-keys": false,
     "no-empty": false,
     "jsx-no-multiline-js": false,
-    "no-console": false
+    "no-console": false,
+    "no-object-literal-type-assertion": false
   }
 }

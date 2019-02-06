@@ -1,29 +1,25 @@
 import * as fs from "fs";
 import Koa from "koa";
 import koaMount from "koa-mount";
+import Router from "koa-router";
 import koaStatic from "koa-static";
 import * as path from "path";
-import {Config, configDecoder} from "./Config";
+import {loadConfig} from "./Config";
+
+const config = loadConfig();
 
 const koa = new Koa();
-const config = loadConfig();
+const router = new Router();
+
+router.get("/musicCollections", async (ctx) => {
+    const allItems = fs.readdirSync(config.musicPath);
+
+    ctx.body = allItems.filter((item) => {
+        return fs.lstatSync(path.join(config.musicPath, item)).isDirectory();
+    });
+});
 
 koa
     .use(koaMount("/display/", koaStatic(path.join(process.cwd(), "../display/build"))))
+    .use(router.routes())
     .listen(4000);
-
-function loadConfig(): Config {
-    const configFile = path.join(process.cwd(), "config.json");
-
-    if (!fs.existsSync(configFile)) {
-        throw new Error("config.json missing");
-    }
-
-    const configText = fs.readFileSync(configFile, "utf8");
-
-    try {
-        return configDecoder.runWithException(JSON.parse(configText));
-    } catch (e) {
-        throw new Error("config.json decoding failed: " + e.message);
-    }
-}
