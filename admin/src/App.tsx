@@ -1,28 +1,65 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {Button, ButtonGroup, Card, H5, Slider} from "@blueprintjs/core";
+import React, {Component} from "react";
+import "./App.css";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
+class App extends Component<{}, ValueHolder> {
+    constructor(props: Readonly<{}>) {
+        super(props);
+
+        this.state = {
+            value: 5,
+        };
+
+        this.onSliderMoved = this.onSliderMoved.bind(this);
+    }
+
+    public render() {
+        return (
+            <>
+                <Card elevation={1} className="card">
+                    <H5>
+                        <a href="#">Music</a>
+                    </H5>
+                    <p>
+
+                        <ButtonGroup>
+                            <Button text="Combat"/>
+                            <Button text="Generic"/>
+                            <Button text="Horror"/>
+                            <Button text="Tavern"/>
+                        </ButtonGroup>
+                    </p>
+
+                    <p>24. The Vikings Have Their Tea (score) - How To Train Your Dragon OST (152kbit_Opus).ogg</p>
+
+                    <p><Slider
+                        max={100}
+                        min={0}
+                        stepSize={1}
+                        labelStepSize={10}
+                        showTrackFill={true}
+                        value={this.state.value}
+                        onChange={this.onSliderMoved}
+                        className="volumeSlider"
+                    /></p>
+
+                    <p>
+                        <Button text="Play/Pause"/>&nbsp;<Button text="Next"/>
+                    </p>
+                </Card>
+            </>
+        );
+    }
+
+    private onSliderMoved(newValue: number) {
+        this.setState({
+            value: newValue,
+        });
+    }
+}
+
+interface ValueHolder {
+    value: number;
 }
 
 export default App;
