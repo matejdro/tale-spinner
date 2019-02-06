@@ -1,4 +1,4 @@
-import {Button, ButtonGroup, Card, H5, Slider} from "@blueprintjs/core";
+import {Button, ButtonGroup, Card, H5, Icon, Slider} from "@blueprintjs/core";
 import React, {Component} from "react";
 import "./App.css";
 
@@ -44,7 +44,11 @@ class App extends Component<{}, ValueHolder> {
                     /></p>
 
                     <p>
-                        <Button text="Play/Pause"/>&nbsp;<Button text="Next"/>
+                        <Button>
+                            <Icon icon={"play"}/><Icon icon={"pause"}/>
+                        </Button>
+                        &nbsp;
+                        <Button><Icon icon={"step-forward"}/></Button>
                     </p>
                 </Card>
             </>
