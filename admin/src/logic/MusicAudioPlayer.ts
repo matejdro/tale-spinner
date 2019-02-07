@@ -1,4 +1,5 @@
 import {observable} from "mobx";
+import shuffle from "shuffle.ts";
 import {AudioPlayer} from "./AudioPlayer";
 import {AudioRepository} from "./AudioRepository";
 import {serverRequest} from "./ServerConnection";
@@ -21,6 +22,8 @@ export class MusicAudioPlayer extends AudioPlayer {
             (fileName) => serverRequest(`music/${categoryName}/${fileName}`),
         );
 
+        shuffle(musicFiles);
+
         this.currentCategory = categoryName;
 
         this.stop();
@@ -29,5 +32,6 @@ export class MusicAudioPlayer extends AudioPlayer {
     }
 
     protected onQueueEnded(): void {
+        this.playCategory(this.currentCategory!);
     }
 }
