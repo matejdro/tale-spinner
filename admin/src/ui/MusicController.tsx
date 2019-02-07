@@ -10,6 +10,8 @@ import {MusicStylePicker} from "./MusicStylePicker";
 export class MusicController extends React.Component<MusicControllerProps> {
     constructor(props: Readonly<MusicControllerProps>) {
         super(props);
+
+        this.togglePlayPause = this.togglePlayPause.bind(this);
     }
 
     public render(): React.ReactNode {
@@ -34,8 +36,8 @@ export class MusicController extends React.Component<MusicControllerProps> {
                 /></p>
 
                 <p>
-                    <Button>
-                        <Icon icon={"play"}/><Icon icon={"pause"}/>
+                    <Button onClick={() => this.togglePlayPause()}>
+                        <Icon icon={this.playPauseIcon}/>
                     </Button>
                     &nbsp;
                 </p>
@@ -46,6 +48,25 @@ export class MusicController extends React.Component<MusicControllerProps> {
     private get currentTrackTitle(): string {
         const playState = this.props.musicPlayer!.playState;
         return playState !== undefined ? playState.title : "[STOPPED]";
+    }
+
+    @computed
+    private get playPauseIcon(): "play" | "pause" {
+        const playState = this.props.musicPlayer!.playState;
+        return playState === undefined || playState.paused ? "play" : "pause";
+    }
+
+    private togglePlayPause(): void {
+        const playState = this.props.musicPlayer!.playState;
+        if (!playState) {
+            return;
+        }
+
+        if (playState.paused) {
+            this.props.musicPlayer!.resume();
+        } else {
+            this.props.musicPlayer!.pause();
+        }
     }
 }
 
