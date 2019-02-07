@@ -3,6 +3,7 @@ import React, {Component} from "react";
 import "./App.css";
 import {AudioRepository} from "./logic/AudioRepository";
 import {MusicAudioPlayer} from "./logic/MusicAudioPlayer";
+import {SocketClient} from "./logic/SocketClient";
 import {StateCollector} from "./logic/StateCollector";
 import {MusicController} from "./ui/MusicController";
 
@@ -13,6 +14,7 @@ class App extends Component<{}, {}> {
     private musicPlayer: MusicAudioPlayer = new MusicAudioPlayer(this.audioRepsitory);
 
     private stateCollector = new StateCollector(this.musicPlayer);
+    private socketClient = new SocketClient(this.stateCollector);
 
     constructor(props: Readonly<{}>) {
         super(props);

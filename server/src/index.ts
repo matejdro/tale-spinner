@@ -1,9 +1,11 @@
 import * as fs from "fs";
+import http from "http";
 import Koa from "koa";
 import koaMount from "koa-mount";
 import Router from "koa-router";
 import koaStatic from "koa-static";
 import * as path from "path";
+import {Socket} from "socket.io";
 import {loadConfig} from "./Config";
 
 const config = loadConfig();
@@ -31,6 +33,14 @@ router.get("/musicList*", async (ctx) => {
     ctx.body = allItems.filter((item) => {
         return item.endsWith("m4a") || item.endsWith("oog") || item.endsWith("flac") || item.endsWith("mp3");
     });
+});
+
+const socketHttp = http.createServer(koa.callback());
+// tslint:disable-next-line
+const socketConnection = require("socket.io")(socketHttp);
+
+socketConnection.on("connection", (socket: Socket) => {
+    console.log("Client connected", socket);
 });
 
 koa
