@@ -38,7 +38,6 @@ export class MusicController extends React.Component<MusicControllerProps> {
                         <Icon icon={"play"}/><Icon icon={"pause"}/>
                     </Button>
                     &nbsp;
-                    <Button><Icon icon={"step-forward"}/></Button>
                 </p>
             </Card>);
     }
