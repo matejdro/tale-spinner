@@ -7,3 +7,7 @@ export function getServerIp(): string {
         return "127.0.0.1";
     }
 }
+
+export function serverRequest(path: string): string {
+    return `http://${getServerIp()}:4000/${path}`;
+}
