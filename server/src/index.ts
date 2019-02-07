@@ -6,6 +6,7 @@ import Router from "koa-router";
 import koaStatic from "koa-static";
 import * as path from "path";
 import {Socket} from "socket.io";
+import {DisplayState} from "../../common/src/DisplayState";
 import {loadConfig} from "./Config";
 
 const config = loadConfig();
@@ -35,17 +36,9 @@ router.get("/musicList*", async (ctx) => {
     });
 });
 
-const socketHttp = http.createServer(koa.callback());
-// tslint:disable-next-line
-const socketConnection = require("socket.io")(socketHttp);
-
-socketConnection.on("connection", (socket: Socket) => {
-    console.log("Client connected", socket);
-});
-
 koa
     .use(async (ctx, next) => {
-        ctx.set("Access-Control-Allow-Origin", "http://localhost:3001");
+        ctx.set("Access-Control-Allow-Origin", ctx.get("Origin"));
         ctx.set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         ctx.set("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
         ctx.set("Access-Control-Allow-Credentials", "true");
@@ -53,5 +46,19 @@ koa
     })
     .use(koaMount("/display/", koaStatic(path.join(process.cwd(), "../display/build"))))
     .use(koaMount("/music/", koaStatic(config.musicPath)))
-    .use(router.routes())
-    .listen(4000);
+    .use(router.routes());
+
+const socketHttp = http.createServer(koa.callback());
+// tslint:disable-next-line
+const socketConnection = require("socket.io")(socketHttp);
+
+socketConnection.on("connection", (socket: Socket) => {
+    socket.on("broadcast-state", (state: DisplayState) => {
+        socket.broadcast.emit("broadcast-state", state);
+    });
+
+    socket.emit("hello");
+
+});
+
+socketHttp.listen(4000);
