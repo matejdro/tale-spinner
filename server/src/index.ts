@@ -24,6 +24,20 @@ router.get("/musicCollections", async (ctx) => {
     });
 });
 
+router.get("/musicList*", async (ctx) => {
+    const category = ctx.query.category;
+    if (!category) {
+        ctx.throw(400, "category parameter missing");
+        return;
+    }
+
+    const allItems = fs.readdirSync(path.join(config.musicPath, category));
+
+    ctx.body = allItems.filter((item) => {
+        return item.endsWith("m4a") || item.endsWith("oog") || item.endsWith("flac") || item.endsWith("mp3");
+    });
+});
+
 koa
     .use(koaMount("/display/", koaStatic(path.join(process.cwd(), "../display/build"))))
     .use(router.routes())
