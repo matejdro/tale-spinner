@@ -48,12 +48,19 @@ koa
     .use(koaMount("/music/", koaStatic(config.musicPath)))
     .use(router.routes());
 
+let currentState: DisplayState;
+
 const socketHttp = http.createServer(koa.callback());
 // tslint:disable-next-line
 const socketConnection = require("socket.io")(socketHttp);
 
 socketConnection.on("connection", (socket: Socket) => {
+    if (currentState) {
+        socket.emit("broadcast-state", currentState);
+    }
+
     socket.on("broadcast-state", (state: DisplayState) => {
+        currentState = state;
         socket.broadcast.emit("broadcast-state", state);
     });
 
