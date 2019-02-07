@@ -1,6 +1,6 @@
 import {observable} from "mobx";
-import shuffle from "shuffle.ts";
-import {AudioPlayer} from "./AudioPlayer";
+import {shuffle} from "../utils/Shuffle";
+import {AudioPlayer, QueueEntry} from "./AudioPlayer";
 import {AudioRepository} from "./AudioRepository";
 import {serverRequest} from "./ServerConnection";
 
@@ -19,15 +19,21 @@ export class MusicAudioPlayer extends AudioPlayer {
         const musicFiles = await AudioRepository.getItems(categoryName);
 
         const musicMapped = musicFiles.map(
-            (fileName) => serverRequest(`music/${categoryName}/${fileName}`),
-        );
+            (fileName) => {
+                // noinspection UnnecessaryLocalVariableJS
+                const entry: QueueEntry = {
+                    url: serverRequest(`music/${categoryName}/${fileName}`),
+                    title: fileName,
+                };
+                return entry;
+            });
 
-        shuffle(musicFiles);
+        const musicShuffled = shuffle(musicMapped);
 
         this.currentCategory = categoryName;
 
         this.stop();
-        this.enqueue(musicMapped);
+        this.enqueue(musicShuffled);
         this.resume();
     }
 

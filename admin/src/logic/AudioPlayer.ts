@@ -5,21 +5,77 @@ export abstract class AudioPlayer {
     @observable
     public playState?: AudioState = undefined;
 
-    public enqueue(urls: string[]): void {
-        // TODO
+    private musicQueue: QueueEntry[] = [];
+
+    public enqueue(urls: QueueEntry[]): void {
+        this.musicQueue.push(...urls);
     }
 
     public pause(): void {
-        // TODO
+        if (!this.playState) {
+            return;
+        }
+
+        this.playState = {
+            ...this.playState,
+            paused: true,
+        };
     }
 
     public resume(): void {
-        // TODO
+        if (this.playState === undefined) {
+            this.enqueueNext();
+        } else {
+            this.playState = {
+                ...this.playState,
+                paused: false,
+            };
+        }
     }
 
     public stop(): void {
-        // TODO
+        this.playState = undefined;
+        this.musicQueue = [];
+    }
+
+    public onPlaybackFinished(): void {
+        if (this.musicQueue.length === 0) {
+            this.stop();
+            return;
+        }
+
+        this.enqueueNext();
     }
 
     protected abstract onQueueEnded(): void;
+
+    private enqueueNext(): void {
+        const nextEntry = this.musicQueue.shift();
+        if (!nextEntry) {
+            return;
+        }
+
+        let newPlayState: AudioState;
+        if (this.playState === undefined) {
+            newPlayState = {
+                url: "",
+                title: "",
+                paused: false,
+                playbackUuid: "",
+            };
+        } else {
+            newPlayState = {...this.playState};
+        }
+
+        newPlayState.title = nextEntry.title;
+        newPlayState.url = nextEntry.url;
+        newPlayState.playbackUuid = Math.random().toFixed(10);
+
+        this.playState = newPlayState;
+    }
+}
+
+export interface QueueEntry {
+    title: string;
+    url: string;
 }
