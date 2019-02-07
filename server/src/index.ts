@@ -40,5 +40,6 @@ router.get("/musicList*", async (ctx) => {
 
 koa
     .use(koaMount("/display/", koaStatic(path.join(process.cwd(), "../display/build"))))
+    .use(koaMount("/music/", koaStatic(config.musicPath)))
     .use(router.routes())
     .listen(4000);
