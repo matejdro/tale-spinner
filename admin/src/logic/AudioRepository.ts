@@ -3,6 +3,15 @@ import {observable} from "mobx";
 import {serverRequest} from "./ServerConnection";
 
 export class AudioRepository {
+    public static async getItems(category: string): Promise<string[]> {
+        const response = await axios.get(serverRequest("musicList"), {
+            params: {
+                category,
+            },
+        });
+
+        return response.data;
+    }
     @observable
     public musicCategories: string[] = [];
 
