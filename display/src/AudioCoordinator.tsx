@@ -11,20 +11,26 @@ class AudioCoordinator extends Component<AudioCoordinatorProps> {
 
     public render(): React.ReactNode {
         let musicState = this.props.music;
-        const pauseMusic = musicState.paused ||
-            (this.props.soundEffect !== undefined && !this.props.soundEffect.paused);
+        if (musicState) {
+            const pauseMusic = musicState.paused ||
+                (this.props.soundEffect !== undefined && !this.props.soundEffect.paused);
 
-        if (pauseMusic !== musicState.paused) {
-            musicState = {...musicState, paused: pauseMusic};
+            if (pauseMusic !== musicState.paused) {
+                musicState = {...musicState, paused: pauseMusic};
+            }
         }
 
         return (
             <>
-                <AudioPlayer
-                    key={AudioCoordinator.getAudioKey(musicState)}
-                    finishListener={this.props.musicEndCallback}
-                    {...musicState}
-                />
+                {
+                    musicState && (
+                        <AudioPlayer
+                            finishListener={this.props.musicEndCallback}
+                            key={AudioCoordinator.getAudioKey(musicState)}
+                            {...musicState}
+                        />
+                    )
+                }
 
                 {
                     this.props.soundEffect && (
