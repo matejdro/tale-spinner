@@ -1,19 +1,19 @@
 import React, {Component} from "react";
 import {AudioScene} from "../../common/src/AudioScene";
-import {AudioState} from "../../common/src/AudioState";
+import {MediaItem} from "../../common/src/AudioState";
 import {AudioPlayer} from "./AudioPlayer";
 
 class AudioCoordinator extends Component<AudioCoordinatorProps> {
 
-    public static getAudioKey(audioState: AudioState) {
-        return `${audioState.url}|${audioState.playbackUuid}`;
+    public static getAudioKey(playback: MediaItem) {
+        return `${playback.url}|${playback.playbackUuid}`;
     }
 
     public render(): React.ReactNode {
         let musicState = this.props.music;
-        if (musicState) {
+        if (musicState.playback) {
             const pauseMusic = musicState.paused ||
-                (this.props.soundEffect !== undefined && !this.props.soundEffect.paused);
+                (this.props.soundEffect.playback !== undefined && !this.props.soundEffect.paused);
 
             if (pauseMusic !== musicState.paused) {
                 musicState = {...musicState, paused: pauseMusic};
@@ -23,20 +23,20 @@ class AudioCoordinator extends Component<AudioCoordinatorProps> {
         return (
             <>
                 {
-                    musicState && (
+                    musicState.playback && (
                         <AudioPlayer
                             finishListener={this.props.musicEndCallback}
-                            key={AudioCoordinator.getAudioKey(musicState)}
+                            key={AudioCoordinator.getAudioKey(musicState.playback)}
                             {...musicState}
                         />
                     )
                 }
 
                 {
-                    this.props.soundEffect && (
+                    this.props.soundEffect.playback && (
                         <AudioPlayer
                             finishListener={this.props.effectEndCallback}
-                            key={AudioCoordinator.getAudioKey(this.props.soundEffect)}
+                            key={AudioCoordinator.getAudioKey(this.props.soundEffect.playback)}
                             {...this.props.soundEffect}
                         />
                     )

@@ -1,6 +1,6 @@
-import {AudioState} from "./AudioState";
+import {PlayerState} from "./AudioState";
 
 export interface AudioScene {
-    music?: AudioState;
-    soundEffect?: AudioState;
+    music: PlayerState;
+    soundEffect: PlayerState;
 }

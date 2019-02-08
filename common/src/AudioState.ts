@@ -1,6 +1,10 @@
-export interface AudioState {
+export interface PlayerState {
+    paused: boolean;
+    playback?: MediaItem;
+}
+
+export interface MediaItem {
     title: string;
     url: string;
-    paused: boolean;
     playbackUuid: string;
 }

@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {AudioState} from "../../common/src/AudioState";
+import {PlayerState} from "../../common/src/AudioState";
 
 export class AudioPlayer extends Component<AudioPlayerProps> {
     private audio = new Audio();
@@ -12,11 +12,11 @@ export class AudioPlayer extends Component<AudioPlayerProps> {
 
     public componentDidMount(): void {
         this.audio.autoplay = !this.props.paused;
-        this.audio.src = this.props.url;
+        this.audio.src = this.props.playback!.url;
         this.audio.load();
     }
 
-    public componentDidUpdate(prevProps: Readonly<AudioState>, prevState: Readonly<{}>, snapshot?: any): void {
+    public componentDidUpdate(prevProps: Readonly<AudioPlayerProps>, prevState: Readonly<{}>, snapshot?: any): void {
         if (prevProps.paused !== this.props.paused) {
             if (this.props.paused) {
                 this.audio.pause();
@@ -36,6 +36,6 @@ export class AudioPlayer extends Component<AudioPlayerProps> {
     }
 }
 
-export interface AudioPlayerProps extends AudioState {
+export interface AudioPlayerProps extends PlayerState {
     finishListener: () => void;
 }

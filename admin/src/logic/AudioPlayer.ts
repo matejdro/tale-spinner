@@ -1,9 +1,11 @@
 import {observable} from "mobx";
-import {AudioState} from "../../../common/src/AudioState";
+import {MediaItem, PlayerState} from "../../../common/src/AudioState";
 
 export abstract class AudioPlayer {
     @observable
-    public playState?: AudioState = undefined;
+    public playerState: PlayerState = {
+        paused: false,
+    };
 
     private musicQueue: QueueEntry[] = [];
 
@@ -16,29 +18,32 @@ export abstract class AudioPlayer {
     }
 
     public pause(): void {
-        if (!this.playState) {
+        if (!this.playerState.playback) {
             return;
         }
 
-        this.playState = {
-            ...this.playState,
+        this.playerState = {
+            ...this.playerState,
             paused: true,
         };
     }
 
     public resume(): void {
-        if (this.playState === undefined) {
+        if (this.playerState.playback === undefined) {
             this.enqueueNext();
         } else {
-            this.playState = {
-                ...this.playState,
+            this.playerState = {
+                ...this.playerState,
                 paused: false,
             };
         }
     }
 
     public stop(): void {
-        this.playState = undefined;
+        this.playerState = {
+            ...this.playerState,
+            playback: undefined,
+        };
         this.musicQueue = [];
     }
 
@@ -59,23 +64,25 @@ export abstract class AudioPlayer {
             return;
         }
 
-        let newPlayState: AudioState;
-        if (this.playState === undefined) {
-            newPlayState = {
+        let newPlayback: MediaItem;
+        if (this.playerState.playback === undefined) {
+            newPlayback = {
                 url: "",
                 title: "",
-                paused: false,
                 playbackUuid: "",
             };
         } else {
-            newPlayState = {...this.playState};
+            newPlayback = {...this.playerState.playback};
         }
 
-        newPlayState.title = nextEntry.title;
-        newPlayState.url = nextEntry.url;
-        newPlayState.playbackUuid = Math.random().toFixed(10);
+        newPlayback.title = nextEntry.title;
+        newPlayback.url = nextEntry.url;
+        newPlayback.playbackUuid = Math.random().toFixed(10);
 
-        this.playState = newPlayState;
+        this.playerState = {
+            ...this.playerState,
+            playback: newPlayback,
+        };
     }
 }
 

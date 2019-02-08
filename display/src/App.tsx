@@ -14,10 +14,6 @@ class App extends Component<{}, DisplayState> {
         this.onEffectEnded = this.onEffectEnded.bind(this);
         this.onMusicEnded = this.onMusicEnded.bind(this);
 
-        this.state = {
-            audio: {},
-        };
-
         this.socket = io(serverRequest(""));
 
         this.socket.on("broadcast-state", (state: DisplayState) => {
@@ -26,6 +22,10 @@ class App extends Component<{}, DisplayState> {
     }
 
     public render() {
+        if (!this.state) {
+            return null;
+        }
+
         return (
             <div className="App">
                 <AudioCoordinator

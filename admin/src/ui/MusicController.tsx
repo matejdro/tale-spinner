@@ -46,19 +46,19 @@ export class MusicController extends React.Component<MusicControllerProps> {
 
     @computed
     private get currentTrackTitle(): string {
-        const playState = this.props.musicPlayer!.playState;
+        const playState = this.props.musicPlayer!.playerState.playback;
         return playState !== undefined ? playState.title : "[STOPPED]";
     }
 
     @computed
     private get playPauseIcon(): "play" | "pause" {
-        const playState = this.props.musicPlayer!.playState;
-        return playState === undefined || playState.paused ? "play" : "pause";
+        const playState = this.props.musicPlayer!.playerState;
+        return playState.playback === undefined || playState.paused ? "play" : "pause";
     }
 
     private togglePlayPause(): void {
-        const playState = this.props.musicPlayer!.playState;
-        if (!playState) {
+        const playState = this.props.musicPlayer!.playerState;
+        if (!playState.playback) {
             return;
         }
 

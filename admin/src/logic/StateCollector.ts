@@ -13,8 +13,8 @@ export class StateCollector {
     get displayState(): DisplayState {
         return {
             audio: {
-                music: this.musicPlayer.playState,
-                soundEffect: undefined,
+                music: this.musicPlayer.playerState,
+                soundEffect: {paused: false},
             },
         };
     }
