@@ -18,6 +18,8 @@ class App extends Component<{}, {}> {
 
     constructor(props: Readonly<{}>) {
         super(props);
+
+        this.socketClient.onMusicEnded = this.musicPlayer.onPlaybackFinished;
     }
 
     public render() {

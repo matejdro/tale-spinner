@@ -38,9 +38,11 @@ class App extends Component<{}, DisplayState> {
     }
 
     private onEffectEnded(): void {
+        this.socket.emit("onEffectEnded");
     }
 
     private onMusicEnded(): void {
+        this.socket.emit("onMusicEnded");
     }
 }
 

@@ -68,6 +68,14 @@ socketConnection.on("connection", (socket: Socket) => {
         socket.broadcast.emit("broadcast-state", state);
     });
 
+    socket.on("onMusicEnded", () => {
+        socket.broadcast.emit("onMusicEnded");
+    });
+
+    socket.on("onEffectEnded", () => {
+        socket.broadcast.emit("onEffectEnded");
+    });
+
     socket.emit("hello");
 
 });

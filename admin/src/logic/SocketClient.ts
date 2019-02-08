@@ -6,6 +6,9 @@ import {serverRequest} from "./ServerConnection";
 import {StateCollector} from "./StateCollector";
 
 export class SocketClient {
+    public onMusicEnded?: () => void;
+    public onEffectEnded?: () => void;
+
     private stateCollector: StateCollector;
     private socket: SocketIOClient.Socket;
 
@@ -18,6 +21,18 @@ export class SocketClient {
         autorun(() => {
             const state = this.stateCollector.displayState;
             this.transmitState(state);
+        });
+
+        this.socket.on("onEffectEnded", () => {
+            if (this.onEffectEnded) {
+                this.onEffectEnded();
+            }
+        });
+
+        this.socket.on("onMusicEnded", () => {
+            if (this.onMusicEnded) {
+                this.onMusicEnded();
+            }
         });
     }
 

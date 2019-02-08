@@ -7,6 +7,10 @@ export abstract class AudioPlayer {
 
     private musicQueue: QueueEntry[] = [];
 
+    constructor() {
+        this.onPlaybackFinished = this.onPlaybackFinished.bind(this);
+    }
+
     public enqueue(urls: QueueEntry[]): void {
         this.musicQueue.push(...urls);
     }
