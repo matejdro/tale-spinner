@@ -44,7 +44,7 @@ export abstract class AudioPlayer {
 
     public onPlaybackFinished(): void {
         if (this.musicQueue.length === 0) {
-            this.stop();
+            this.onQueueEnded();
             return;
         }
 
