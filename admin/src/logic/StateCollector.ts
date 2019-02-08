@@ -14,7 +14,7 @@ export class StateCollector {
         return {
             audio: {
                 music: this.musicPlayer.playerState,
-                soundEffect: {paused: false},
+                soundEffect: {paused: false, volume: 0.0},
             },
         };
     }

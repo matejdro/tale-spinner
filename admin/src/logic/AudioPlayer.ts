@@ -5,6 +5,7 @@ export abstract class AudioPlayer {
     @observable
     public playerState: PlayerState = {
         paused: false,
+        volume: 0.5,
     };
 
     private musicQueue: QueueEntry[] = [];
@@ -45,6 +46,13 @@ export abstract class AudioPlayer {
             playback: undefined,
         };
         this.musicQueue = [];
+    }
+
+    public setVolume(newVolume: number): void {
+        this.playerState = {
+            ...this.playerState,
+            volume: newVolume,
+        };
     }
 
     public onPlaybackFinished(): void {

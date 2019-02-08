@@ -11,6 +11,7 @@ export class AudioPlayer extends Component<AudioPlayerProps> {
     }
 
     public componentDidMount(): void {
+        this.audio.volume = this.props.volume;
         this.audio.autoplay = !this.props.paused;
         this.audio.src = this.props.playback!.url;
         this.audio.load();
@@ -24,6 +25,8 @@ export class AudioPlayer extends Component<AudioPlayerProps> {
                 this.audio.play();
             }
         }
+
+        this.audio.volume = this.props.volume;
     }
 
     public componentWillUnmount(): void {

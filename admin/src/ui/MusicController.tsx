@@ -1,5 +1,5 @@
 import {Button, Card, H5, Icon, Slider} from "@blueprintjs/core";
-import {computed} from "mobx";
+import {action, computed} from "mobx";
 import {inject, observer} from "mobx-react";
 import * as React from "react";
 import {MusicAudioPlayer} from "../logic/MusicAudioPlayer";
@@ -12,6 +12,7 @@ export class MusicController extends React.Component<MusicControllerProps> {
         super(props);
 
         this.togglePlayPause = this.togglePlayPause.bind(this);
+        this.updateVolume = this.updateVolume.bind(this);
     }
 
     public render(): React.ReactNode {
@@ -32,6 +33,8 @@ export class MusicController extends React.Component<MusicControllerProps> {
                     stepSize={1}
                     labelStepSize={10}
                     showTrackFill={true}
+                    value={this.volumePercent}
+                    onChange={this.updateVolume}
                     className="volumeSlider"
                 /></p>
 
@@ -54,6 +57,16 @@ export class MusicController extends React.Component<MusicControllerProps> {
     private get playPauseIcon(): "play" | "pause" {
         const playState = this.props.musicPlayer!.playerState;
         return playState.playback === undefined || playState.paused ? "play" : "pause";
+    }
+
+    @computed
+    private get volumePercent(): number {
+        return Math.round(this.props.musicPlayer!.playerState.volume * 100);
+    }
+
+    @action
+    private updateVolume(newVolume: number): void {
+        this.props.musicPlayer!.setVolume(newVolume / 100.0);
     }
 
     private togglePlayPause(): void {
