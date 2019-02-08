@@ -32,7 +32,11 @@ router.get("/musicList*", async (ctx) => {
     const allItems = fs.readdirSync(path.join(config.musicPath, category));
 
     ctx.body = allItems.filter((item) => {
-        return item.endsWith("m4a") || item.endsWith("oog") || item.endsWith("flac") || item.endsWith("mp3");
+        return item.endsWith("m4a") ||
+            item.endsWith("ogg") ||
+            item.endsWith("flac") ||
+            item.endsWith("mp3") ||
+            item.endsWith("wav");
     });
 });
 
