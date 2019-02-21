@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {PlayerState} from "../../common/src/AudioState";
+import {PlayerState} from "../../../common/src/AudioState";
 
 export class AudioPlayer extends Component<AudioPlayerProps> {
     private audio = new Audio();

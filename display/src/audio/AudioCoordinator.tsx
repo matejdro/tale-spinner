@@ -1,6 +1,6 @@
 import React, {Component} from "react";
-import {AudioScene} from "../../common/src/AudioScene";
-import {MediaItem} from "../../common/src/AudioState";
+import {AudioScene} from "../../../common/src/AudioScene";
+import {MediaItem} from "../../../common/src/AudioState";
 import {AudioPlayer} from "./AudioPlayer";
 
 class AudioCoordinator extends Component<AudioCoordinatorProps> {

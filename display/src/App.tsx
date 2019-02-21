@@ -1,12 +1,55 @@
 import React, {Component} from "react";
 import io from "socket.io-client";
 import {DisplayState} from "../../common/src/DisplayState";
+import {InitiativeData} from "../../common/src/Initiative";
 import "./App.css";
-import AudioCoordinator from "./AudioCoordinator";
+import AudioCoordinator from "./audio/AudioCoordinator";
+import {InitiativeTable} from "./initiative/InitiativeTable";
 import {serverRequest} from "./ServerConnection";
 
 class App extends Component<{}, DisplayState> {
     private socket: SocketIOClient.Socket;
+
+    private initiative: InitiativeData = {
+        selectedIndex: 1,
+        entries: [
+            {
+                name: "Reinhardt",
+                initiative: 20,
+                friendly: true,
+            },
+            {
+                name: "Ivan",
+                initiative: 18,
+                friendly: false,
+            },
+            {
+                name: "Popi",
+                initiative: 16,
+                friendly: false,
+            },
+            {
+                name: "Gwyn",
+                initiative: 15,
+                friendly: true,
+            },
+            {
+                name: "GR",
+                initiative: 14,
+                friendly: true,
+            },
+            {
+                name: "Severiss",
+                initiative: 14,
+                friendly: true,
+            },
+            {
+                name: "Chtulu",
+                initiative: 13,
+                friendly: false,
+            },
+        ],
+    };
 
     constructor(props: Readonly<any>) {
         super(props);
@@ -22,6 +65,8 @@ class App extends Component<{}, DisplayState> {
     }
 
     public render() {
+        return <InitiativeTable {...this.initiative} />;
+
         if (!this.state) {
             return null;
         }
@@ -32,8 +77,11 @@ class App extends Component<{}, DisplayState> {
                     musicEndCallback={this.onMusicEnded}
                     effectEndCallback={this.onEffectEnded}
                     {...this.state.audio}
-                /> <br/>
+                />
+
+                return <InitiativeTable {...this.initiative} />;
             </div>
+
         );
     }
 
