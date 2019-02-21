@@ -16,3 +16,16 @@ body {
     margin-left: auto;
     margin-right: auto;
 }
+
+.vertical-flex {
+    display: flex;
+    flex-direction: column;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
