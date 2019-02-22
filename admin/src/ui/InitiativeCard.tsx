@@ -86,12 +86,6 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
 
         this.props.initiativeController.addEntry(newEntry);
 
-        this.setState({
-            name: "",
-            friendly: false,
-            initiative: "",
-        });
-
         const field = this.firstTextFieldRef.current;
         if (field != null) {
             field.toggleEditing();
