@@ -1,3 +1,4 @@
+import _ from "lodash";
 import {observable} from "mobx";
 import {InitiativeData, InitiativeEntry} from "../../../common/src/Initiative";
 
@@ -9,10 +10,10 @@ export class InitiativeController {
     };
 
     public addEntry(entry: InitiativeEntry) {
-        const newEntries = this.initiative.entries.slice();
+        let newEntries = this.initiative.entries.slice();
         newEntries.push(entry);
 
-        newEntries.sort((a: InitiativeEntry, b: InitiativeEntry) => b.initiative - a.initiative);
+        newEntries = _.sortBy(newEntries, (a: InitiativeEntry) => -a.initiative);
 
         this.initiative = {
             ...this.initiative,
@@ -21,10 +22,10 @@ export class InitiativeController {
     }
 
     public removeEntry(index: number) {
-        const newEntries = this.initiative.entries.slice();
+        let newEntries = this.initiative.entries.slice();
         newEntries.splice(index, 1);
 
-        newEntries.sort((a: InitiativeEntry, b: InitiativeEntry) => b.initiative - a.initiative);
+        newEntries = _.sortBy(newEntries, (a: InitiativeEntry) => -a.initiative);
 
         this.initiative = {
             ...this.initiative,
