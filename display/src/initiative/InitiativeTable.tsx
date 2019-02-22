@@ -17,7 +17,8 @@ export class InitiativeTable extends Component<InitiativeData> {
                     <div className="col">
                         <div className={badgeClasses}>&nbsp;</div>
                     </div>
-                    <div className="col">{item.initiative}</div>
+                    <div className="col rightAlign">{item.initiative.toFixed(2)}</div>
+                    <div className="col"/>
                 </div>
             );
         });

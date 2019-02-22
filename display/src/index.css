@@ -53,3 +53,7 @@ code {
 .redBackground {
   background-color: #FF4136;
 }
+
+.rightAlign {
+  text-align: right;
+}
