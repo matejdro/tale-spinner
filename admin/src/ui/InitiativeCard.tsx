@@ -6,7 +6,7 @@ import {InitiativeEntry} from "../../../common/src/Initiative";
 import {InitiativeController} from "../logic/InitiativeController";
 
 class LocalInitiativeCard extends React.Component<InitiativeCardProps, InitiativeEditorState> {
-    private firstTextFieldRef = React.createRef<EditableText>();
+    private firstTextFieldRef = React.createRef<HTMLInputElement>();
 
     constructor(props: InitiativeCardProps) {
         super(props);
@@ -26,12 +26,12 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
                     <a href="#">Initiative</a>
                 </h5>
 
-                <EditableText
+                <input
                     className="mb-10"
                     ref={this.firstTextFieldRef}
                     value={this.state.name}
+                    onKeyDown={this.handleKeyEvent}
                     placeholder="Test"
-                    selectAllOnFocus={true}
                     onChange={this.handleTextChange("name")}
                 />
 
@@ -42,13 +42,12 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
                     onChange={this.handleSwitchChange("friendly")}
                 />
 
-                <EditableText
+                <input
                     className="mb-20"
                     placeholder="Initiative"
                     value={this.state.initiative}
-                    onConfirm={this.addNew}
+                    onKeyDown={this.handleKeyEvent}
                     onChange={this.handleTextChange("initiative")}
-                    selectAllOnFocus={true}
                 />
 
                 <EditableText
@@ -56,7 +55,7 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
                     placeholder="Delete Index"
                     value={this.state.deleteIndex}
                     onConfirm={this.deleteAtIndex}
-                    onChange={this.handleTextChange("deleteIndex")}
+                    onChange={this.handleEditableTextChange("deleteIndex")}
                     selectAllOnFocus={true}
                 />
 
@@ -68,8 +67,20 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
         );
     }
 
-    private handleTextChange = (field: string) => (text: string) => {
-        this.setState({[field]: text} as any);
+    private handleEditableTextChange = (field: string) => (value: string) => {
+        this.setState({[field]: value} as any);
+    }
+
+    private handleTextChange = (field: string) => (event: React.FormEvent<HTMLInputElement>) => {
+        this.setState({[field]: event.currentTarget.value} as any);
+    }
+
+    private handleKeyEvent = (event: React.KeyboardEvent<HTMLElement>) => {
+        const {which} = event;
+
+        if (which === 13) {
+            this.addNew();
+        }
     }
 
     private handleSwitchChange = (field: string) => (event: React.FormEvent<HTMLInputElement>) => {
@@ -88,7 +99,8 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
 
         const field = this.firstTextFieldRef.current;
         if (field != null) {
-            field.toggleEditing();
+            field.focus();
+            field.setSelectionRange(0, field.value.length);
         }
     }
 
