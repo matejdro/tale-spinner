@@ -5,6 +5,7 @@
     "object-literal-sort-keys": false,
     "no-empty": false,
     "jsx-no-multiline-js": false,
-    "jsx-no-lambda": false
+    "jsx-no-lambda": false,
+    "prefer-conditional-expression": false
   }
 }

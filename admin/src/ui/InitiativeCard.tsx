@@ -89,10 +89,26 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
 
     @action
     private addNew = () => {
+        const initiativeText = this.state.initiative;
+        let newInitiativeValue: number;
+
+        if (initiativeText.startsWith("+") || initiativeText.startsWith("-")) {
+            let modifier = parseInt(initiativeText.substr(1), 10);
+            if (initiativeText.startsWith("-")) {
+                modifier = -modifier;
+            }
+
+            const abilityScore = (modifier * 2) + 10;
+
+            newInitiativeValue = Math.max(0, Math.floor(Math.random() * 20 + 1) + modifier + abilityScore / 100.0);
+        } else {
+            newInitiativeValue = parseFloat(initiativeText);
+        }
+
         const newEntry: InitiativeEntry = {
             name: this.state.name,
             friendly: this.state.friendly,
-            initiative: parseInt(this.state.initiative, 10),
+            initiative: newInitiativeValue,
         };
 
         this.props.initiativeController.addEntry(newEntry);
