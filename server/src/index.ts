@@ -59,6 +59,11 @@ const socketHttp = http.createServer(koa.callback());
 // tslint:disable-next-line
 const socketConnection = require("socket.io")(socketHttp);
 
+const eventsToBroadcast = [
+    "onMusicEnded",
+    "onEffectEnded",
+];
+
 socketConnection.on("connection", (socket: Socket) => {
     if (currentState) {
         socket.emit("broadcast-state", currentState);
@@ -69,16 +74,11 @@ socketConnection.on("connection", (socket: Socket) => {
         socket.broadcast.emit("broadcast-state", state);
     });
 
-    socket.on("onMusicEnded", () => {
-        socket.broadcast.emit("onMusicEnded");
-    });
-
-    socket.on("onEffectEnded", () => {
-        socket.broadcast.emit("onEffectEnded");
-    });
-
-    socket.emit("hello");
-
+    for (const event of eventsToBroadcast) {
+        socket.on(event, (data: any) => {
+            socket.broadcast.emit(event, data);
+        });
+    }
 });
 
 socketHttp.listen(4000);
