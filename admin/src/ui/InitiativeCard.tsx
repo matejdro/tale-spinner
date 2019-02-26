@@ -7,7 +7,8 @@ import {InitiativeController} from "../logic/InitiativeController";
 
 @observer
 class LocalInitiativeCard extends React.Component<InitiativeCardProps, InitiativeEditorState> {
-    private firstTextFieldRef = React.createRef<HTMLInputElement>();
+    private nameTextFieldRef = React.createRef<HTMLInputElement>();
+    private initiativeTextFieldRef = React.createRef<HTMLInputElement>();
 
     constructor(props: InitiativeCardProps) {
         super(props);
@@ -54,7 +55,7 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
                 <div className="horizontal-flex mb-20">
                     <input
                         className="mr-10"
-                        ref={this.firstTextFieldRef}
+                        ref={this.nameTextFieldRef}
                         value={this.state.name}
                         onKeyDown={this.handleKeyEvent}
                         placeholder="Test"
@@ -64,6 +65,7 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
                     <input
                         className="mr-10"
                         placeholder="Initiative"
+                        ref={this.initiativeTextFieldRef}
                         value={this.state.initiative}
                         onKeyDown={this.handleKeyEvent}
                         onChange={this.handleTextChange("initiative")}
@@ -118,7 +120,7 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
 
         initiativeController.removeEntry(index);
 
-        const field = this.firstTextFieldRef.current;
+        const field = this.initiativeTextFieldRef.current;
         if (field != null) {
             field.focus();
             field.setSelectionRange(0, field.value.length);
@@ -161,7 +163,7 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
 
         this.props.initiativeController.addEntry(newEntry);
 
-        const field = this.firstTextFieldRef.current;
+        const field = this.nameTextFieldRef.current;
         if (field != null) {
             field.focus();
             field.setSelectionRange(0, field.value.length);
