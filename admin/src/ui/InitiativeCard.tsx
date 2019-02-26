@@ -61,18 +61,19 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
                         onChange={this.handleTextChange("name")}
                     />
 
-                    <Switch
-                        className="mr-10 mb-0"
-                        label="Friendly"
-                        checked={this.state.friendly}
-                        onChange={this.handleSwitchChange("friendly")}
-                    />
-
                     <input
+                        className="mr-10"
                         placeholder="Initiative"
                         value={this.state.initiative}
                         onKeyDown={this.handleKeyEvent}
                         onChange={this.handleTextChange("initiative")}
+                    />
+
+                    <Switch
+                        className="mb-0"
+                        label="Friendly"
+                        checked={this.state.friendly}
+                        onChange={this.handleSwitchChange("friendly")}
                     />
                 </div>
 
