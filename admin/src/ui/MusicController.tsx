@@ -17,17 +17,13 @@ export class MusicController extends React.Component<MusicControllerProps> {
 
     public render(): React.ReactNode {
         return (
-            <Card elevation={1} className="card">
-                <H5>
-                    <a href="#">Music</a>
-                </H5>
-                <p>
-                    <MusicStylePicker/>
-                </p>
+            <Card elevation={1} className="card vertical-flex">
+                <a href="#" className="mb-10">Music</a>
+                <MusicStylePicker className="mb-20"/>
 
-                <p>{this.currentTrackTitle}</p>
+                <div className="mb-20">{this.currentTrackTitle}</div>
 
-                <p><Slider
+                <Slider
                     max={100}
                     min={0}
                     stepSize={1}
@@ -35,15 +31,12 @@ export class MusicController extends React.Component<MusicControllerProps> {
                     showTrackFill={true}
                     value={this.volumePercent}
                     onChange={this.updateVolume}
-                    className="volumeSlider"
-                /></p>
+                    className="volumeSlider mb-20"
+                 />
 
-                <p>
                     <Button onClick={() => this.togglePlayPause()}>
                         <Icon icon={this.playPauseIcon}/>
                     </Button>
-                    &nbsp;
-                </p>
             </Card>);
     }
 

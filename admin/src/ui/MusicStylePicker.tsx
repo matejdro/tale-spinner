@@ -3,6 +3,7 @@ import {inject, observer} from "mobx-react";
 import * as React from "react";
 import {AudioRepository} from "../logic/AudioRepository";
 import {MusicAudioPlayer} from "../logic/MusicAudioPlayer";
+import {ComponentWithClassName} from "../../../common/src/ComponentWithClassName";
 
 @inject("audioRepository", "musicPlayer")
 @observer
@@ -29,14 +30,14 @@ export class MusicStylePicker extends React.Component<MusicStylePickerProps> {
         });
 
         return (
-            <ButtonGroup>
+            <ButtonGroup className={this.props.className}>
                 {buttons}
             </ButtonGroup>
         );
     }
 }
 
-export interface MusicStylePickerProps {
+export interface MusicStylePickerProps extends ComponentWithClassName {
     audioRepository?: AudioRepository;
     musicPlayer?: MusicAudioPlayer;
 }
