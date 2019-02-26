@@ -1,3 +1,4 @@
 {
-	"musicPath": "C:/Music"
+	"musicPath": "C:/Music",
+    "creatureIconsPath": "C:/Creatures"
 }

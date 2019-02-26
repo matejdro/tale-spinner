@@ -5,6 +5,7 @@ export interface InitiativeData {
 
 export interface InitiativeEntry {
     name: string;
+    iconUrl?: string;
     initiative: number;
     friendly: boolean;
     visible: boolean;

@@ -51,6 +51,7 @@ koa
     .use(koaMount("/display/", koaStatic(path.join(process.cwd(), "../display/build"))))
     .use(koaMount("/admin/", koaStatic(path.join(process.cwd(), "../admin/build"))))
     .use(koaMount("/music/", koaStatic(config.musicPath)))
+    .use(koaMount("/creatures/", koaStatic(config.creatureIconsPath)))
     .use(router.routes());
 
 let currentState: DisplayState;

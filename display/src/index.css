@@ -17,16 +17,21 @@ code {
 }
 
 .table {
-  margin: 50px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
+  display: flex;
   font-size: 70px;
+  flex-wrap: wrap;
 }
 
 .row {
+  height: 100px;
+  width: 100%;
   display: flex;
-  padding: 5px;
-  margin-bottom: 10px;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
 
 .onTurn {
@@ -34,8 +39,17 @@ code {
   border-radius: 10px;
 }
 
-.col {
-  flex: 1;
+.cell {
+  flex: 1 1 10px;
+  overflow: hidden;
+  list-style: none;
+}
+
+.long-cell {
+}
+
+.no-grow-cell {
+  flex: 0 1 auto;
 }
 
 .badge {
@@ -54,6 +68,15 @@ code {
   background-color: #FF4136;
 }
 
-.rightAlign {
+.right-align {
   text-align: right;
+}
+
+.left-align {
+  text-align: left;
+}
+
+.creature-icon {
+  width: 75px;
+  height: 75px;
 }
