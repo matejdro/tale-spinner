@@ -70,10 +70,6 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
 
                     <input
                         placeholder="Initiative"
-                        type="number"
-                        min="0"
-                        max="100"
-                        step="0.01"
                         value={this.state.initiative}
                         onKeyDown={this.handleKeyEvent}
                         onChange={this.handleTextChange("initiative")}
@@ -151,9 +147,7 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
                 modifier = -modifier;
             }
 
-            const abilityScore = (modifier * 2) + 10;
-
-            newInitiativeValue = Math.max(0, Math.floor(Math.random() * 20 + 1) + modifier + abilityScore / 100.0);
+            newInitiativeValue = Math.max(0, Math.floor(Math.random() * 20 + 1) + modifier + modifier / 100.0);
         } else {
             newInitiativeValue = parseFloat(initiativeText);
         }
