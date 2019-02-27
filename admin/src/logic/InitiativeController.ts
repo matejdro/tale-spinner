@@ -33,6 +33,21 @@ export class InitiativeController {
         };
     }
 
+    public setVisibility(index: number, visible: boolean) {
+        let newEntries = this.initiative.entries.slice();
+        newEntries[index] = {
+            ...newEntries[index],
+            visible,
+        };
+
+        newEntries = _.sortBy(newEntries, (a: InitiativeEntry) => -a.initiative);
+
+        this.initiative = {
+            ...this.initiative,
+            entries: newEntries,
+        };
+    }
+
     public advanceSelector() {
         const next = (this.initiative.selectedIndex + 1) % this.initiative.entries.length;
 

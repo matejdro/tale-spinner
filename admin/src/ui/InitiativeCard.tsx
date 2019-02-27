@@ -15,6 +15,7 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
         this.state = {
             name: "",
             friendly: false,
+            visible: true,
             initiative: "",
             deleteIndex: "",
         };
@@ -37,6 +38,13 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
                         <div className="cell">{entry.name}</div>
                         <div className="cell">{entry.friendly ? "✔" : "❌"}</div>
                         <div className="cell">{entry.initiative.toFixed(2)}</div>
+                        <div className="cell">
+                            <Switch
+                                className="mb-0"
+                                checked={entry.visible}
+                                onChange={this.handleVisibilityChange(index)}
+                            />
+                        </div>
                         <div className="cell">
                             <Button text="✏" onClick={this.editAt(index)} className="emoji-button"/>
                         </div>
@@ -72,10 +80,17 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
                     />
 
                     <Switch
-                        className="mb-0"
+                        className="mb-0 mr-10"
                         label="Friendly"
                         checked={this.state.friendly}
                         onChange={this.handleSwitchChange("friendly")}
+                    />
+
+                    <Switch
+                        className="mb-0"
+                        label="Visible"
+                        checked={this.state.visible}
+                        onChange={this.handleSwitchChange("visible")}
                     />
                 </div>
 
@@ -84,6 +99,7 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
                         <div className="cell">Name</div>
                         <div className="cell">Friendly</div>
                         <div className="cell">Initiative</div>
+                        <div className="cell">Visible</div>
                         <div className="cell">Edit</div>
                         <div className="cell">Delete</div>
                     </div>
@@ -140,6 +156,11 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
     }
 
     @action
+    private handleVisibilityChange = (index: number) => (event: React.FormEvent<HTMLInputElement>) => {
+        this.props.initiativeController.setVisibility(index, (event.target as unknown as any).checked);
+    }
+
+    @action
     private addNew = () => {
         const initiativeText = this.state.initiative;
         let newInitiativeValue: number;
@@ -159,6 +180,7 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
             name: this.state.name,
             friendly: this.state.friendly,
             initiative: newInitiativeValue,
+            visible: this.state.visible,
         };
 
         this.props.initiativeController.addEntry(newEntry);
@@ -194,6 +216,7 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
 interface InitiativeEditorState {
     name: string;
     friendly: boolean;
+    visible: boolean;
     initiative: string;
     deleteIndex: string;
 }

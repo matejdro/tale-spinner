@@ -3,7 +3,7 @@ import {InitiativeData} from "../../../common/src/Initiative";
 
 export class InitiativeTable extends Component<InitiativeData> {
     public render(): React.ReactNode {
-        const rows = this.props.entries.map((item, index) => {
+        const rows = this.props.entries.filter((item) => item.visible).map((item, index) => {
             const alignmentClasse = item.friendly ? "greenBackground" : "redBackground";
             const selected = this.props.selectedIndex === index;
             const onTurnClass = selected ? "onTurn" : "";

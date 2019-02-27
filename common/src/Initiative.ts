@@ -7,4 +7,5 @@ export interface InitiativeEntry {
     name: string;
     initiative: number;
     friendly: boolean;
+    visible: boolean;
 }
