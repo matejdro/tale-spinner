@@ -29,17 +29,18 @@ class App extends Component<{}, {}> {
     public render() {
         return (
             <>
-                <Provider musicPlayer={this.musicPlayer} audioRepository={this.audioRepository}>
-                    <MusicController/>
+                <Provider
+                    musicPlayer={this.musicPlayer}
+                    audioRepository={this.audioRepository}
+                    initiativeController={this.initiativeController}
+                >
+                    <>
+                        <MusicController className="mb-20"/>
+                        <InitiativeCard/>
+
+                    </>
                 </Provider>
 
-                <br/>
-                <br/>
-                <br/>
-
-                <Provider initiativeController={this.initiativeController}>
-                    <InitiativeCard/>
-                </Provider>
             </>
         );
     }

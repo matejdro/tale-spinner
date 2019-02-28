@@ -1,7 +1,8 @@
-import {Button, Card, H5, Icon, Slider} from "@blueprintjs/core";
+import {Button, Card, Icon, Slider} from "@blueprintjs/core";
 import {action, computed} from "mobx";
 import {inject, observer} from "mobx-react";
 import * as React from "react";
+import {ComponentWithClassName} from "../../../common/src/ComponentWithClassName";
 import {MusicAudioPlayer} from "../logic/MusicAudioPlayer";
 import {MusicStylePicker} from "./MusicStylePicker";
 
@@ -17,7 +18,7 @@ export class MusicController extends React.Component<MusicControllerProps> {
 
     public render(): React.ReactNode {
         return (
-            <Card elevation={1} className="card vertical-flex">
+            <Card elevation={1} className={"card vertical-flex " + this.props.className}>
                 <a href="#" className="mb-10">Music</a>
                 <MusicStylePicker className="mb-20"/>
 
@@ -32,11 +33,11 @@ export class MusicController extends React.Component<MusicControllerProps> {
                     value={this.volumePercent}
                     onChange={this.updateVolume}
                     className="volumeSlider mb-20"
-                 />
+                />
 
-                    <Button onClick={() => this.togglePlayPause()}>
-                        <Icon icon={this.playPauseIcon}/>
-                    </Button>
+                <Button onClick={() => this.togglePlayPause()}>
+                    <Icon icon={this.playPauseIcon}/>
+                </Button>
             </Card>);
     }
 
@@ -76,6 +77,6 @@ export class MusicController extends React.Component<MusicControllerProps> {
     }
 }
 
-export interface MusicControllerProps {
+export interface MusicControllerProps extends ComponentWithClassName {
     musicPlayer?: MusicAudioPlayer;
 }
