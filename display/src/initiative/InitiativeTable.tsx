@@ -20,13 +20,14 @@ export class InitiativeTable extends Component<InitiativeData> {
 
             return (
                 <div className={rowClasses} key={index}>
-                    <div className="cell left-align">
+                    <div className="cell no-grow-cell center-align mr-20">
                         <img
                             className="creature-icon"
                             src={itemIcon}
                         />
-
-                        &nbsp;{item.name}
+                    </div>
+                    <div className="cell left-align">
+                        {item.name}
                     </div>
                     <div className="cell no-grow-cell">
                         <div className={badgeClasses}>&nbsp;</div>
