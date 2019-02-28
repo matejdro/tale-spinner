@@ -57,7 +57,7 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
             });
 
         return (
-            <Card elevation={1} className="card vertical-flex initiative-card center-hozirontal">
+            <Card elevation={1} className="vertical-flex initiative-card center-hozirontal">
                 <h5>
                     <a href="#">Initiative</a>
                 </h5>

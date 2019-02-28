@@ -3,10 +3,6 @@ body {
     text-align: center;
 }
 
-.card {
-    width: fit-content;
-}
-
 .center-hozirontal {
     display: inline-block;
     margin-left: auto;
@@ -15,6 +11,10 @@ body {
 
 .initiative-card {
     width: 700px;
+}
+
+.audio-card {
+    width: 500px;
 }
 
 .volumeSlider {

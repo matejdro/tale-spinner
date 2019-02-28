@@ -18,7 +18,7 @@ export class MusicController extends React.Component<MusicControllerProps> {
 
     public render(): React.ReactNode {
         return (
-            <Card elevation={1} className={"card vertical-flex " + this.props.className}>
+            <Card elevation={1} className={"audio-card vertical-flex " + this.props.className}>
                 <a href="#" className="mb-10">Music</a>
                 <MusicStylePicker className="mb-20"/>
 

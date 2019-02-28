@@ -25,7 +25,7 @@ class LocalEffectsController extends React.Component<EffectsControllerProps> {
         const {currentEffect} = effectsPlayer;
 
         return (
-            <Card elevation={1} className={"card vertical-flex " + this.props.className}>
+            <Card elevation={1} className={"audio-card vertical-flex " + this.props.className}>
                 <a href="#" className="mb-10">Effects</a>
                 <EffectsSelect
                     itemRenderer={renderString}
