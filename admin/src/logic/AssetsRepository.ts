@@ -17,6 +17,8 @@ export class AssetsRepository {
     public musicCategories: string[] = [];
     @observable
     public creatureIcons: string[] = [];
+    @observable
+    public soundEffects: string[] = [];
 
     constructor() {
         this.refreshData();
@@ -28,5 +30,8 @@ export class AssetsRepository {
 
         response = await axios.get(serverRequest("creatureIcons"));
         this.creatureIcons = response.data;
+
+        response = await axios.get(serverRequest("effectList"));
+        this.soundEffects = response.data;
     }
 }

@@ -8,7 +8,7 @@ export abstract class AudioPlayer {
         volume: 0.5,
     };
 
-    private musicQueue: QueueEntry[] = [];
+    protected musicQueue: QueueEntry[] = [];
 
     constructor() {
         this.onPlaybackFinished = this.onPlaybackFinished.bind(this);

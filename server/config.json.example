@@ -1,4 +1,5 @@
 {
 	"musicPath": "C:/Music",
+    "effectsPath": "C:/Effects",
     "creatureIconsPath": "C:/Creatures"
 }

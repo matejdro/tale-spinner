@@ -5,10 +5,12 @@ import {InitiativeController} from "./InitiativeController";
 
 export class StateCollector {
     private musicPlayer: AudioPlayer;
+    private effectsPlayer: AudioPlayer;
     private initiativeController: InitiativeController;
 
-    constructor(musicPlayer: AudioPlayer, initiativeController: InitiativeController) {
+    constructor(musicPlayer: AudioPlayer, effectsPlayer: AudioPlayer, initiativeController: InitiativeController) {
         this.musicPlayer = musicPlayer;
+        this.effectsPlayer = effectsPlayer;
         this.initiativeController = initiativeController;
     }
 
@@ -17,7 +19,7 @@ export class StateCollector {
         return {
             audio: {
                 music: this.musicPlayer.playerState,
-                soundEffect: {paused: false, volume: 0.0},
+                soundEffect: this.effectsPlayer.playerState,
             },
             initiative: this.initiativeController.initiative,
         };

@@ -4,11 +4,13 @@ import * as path from "path";
 
 export interface Config {
     musicPath: string;
+    effectsPath: string;
     creatureIconsPath: string;
 }
 
 const configDecoder: Decoder<Config> = object({
     musicPath: string(),
+    effectsPath: string(),
     creatureIconsPath: string(),
 });
 

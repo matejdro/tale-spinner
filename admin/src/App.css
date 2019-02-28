@@ -4,8 +4,11 @@ body {
 }
 
 .card {
-    display: inline-block;
     width: fit-content;
+}
+
+.center-hozirontal {
+    display: inline-block;
     margin-left: auto;
     margin-right: auto;
 }
