@@ -1,8 +1,9 @@
 import {Button, Card, Switch} from "@blueprintjs/core";
-import {action} from "mobx";
+import {action, computed} from "mobx";
 import {inject, observer} from "mobx-react";
 import * as React from "react";
 import {InitiativeEntry} from "../../../common/src/Initiative";
+import {AssetsRepository} from "../logic/AssetsRepository";
 import {InitiativeController} from "../logic/InitiativeController";
 
 @observer
@@ -109,8 +110,9 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
 
                 <Button onClick={this.clear} text="Clear" className="mb-20"/>
 
-                <Button onClick={this.advanceSelector} text="Next"/>
+                <Button onClick={this.advanceSelector} text="Next" className="mb-10"/>
 
+                {this.creatureIconNames.join(" ")}
             </Card>
         );
     }
@@ -187,7 +189,6 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
 
         const field = this.nameTextFieldRef.current;
         if (field != null) {
-            field.focus();
             field.setSelectionRange(0, field.value.length);
         }
     }
@@ -211,6 +212,12 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
     private advanceSelector = () => {
         this.props.initiativeController.advanceSelector();
     }
+
+    @computed
+    private get creatureIconNames(): string[] {
+        return this.props.assetsRepository.creatureIcons
+            .map((item) => item.substr(0, item.indexOf(".")));
+    }
 }
 
 interface InitiativeEditorState {
@@ -223,6 +230,7 @@ interface InitiativeEditorState {
 
 export interface InitiativeCardProps {
     initiativeController: InitiativeController;
+    assetsRepository: AssetsRepository;
 }
 
 export const InitiativeCard = inject((stores: InitiativeCardProps) => ({
