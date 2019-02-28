@@ -11,7 +11,7 @@ export class AudioPlayer extends Component<AudioPlayerProps> {
     }
 
     public componentDidMount(): void {
-        this.audio.volume = this.props.volume;
+        this.audio.volume = this.calculateLogarithmicVolume();
         this.audio.autoplay = !this.props.paused;
         this.audio.src = this.props.playback!.url;
         this.audio.load();
@@ -26,7 +26,7 @@ export class AudioPlayer extends Component<AudioPlayerProps> {
             }
         }
 
-        this.audio.volume = this.props.volume;
+        this.audio.volume = this.calculateLogarithmicVolume();
     }
 
     public componentWillUnmount(): void {
@@ -37,8 +37,14 @@ export class AudioPlayer extends Component<AudioPlayerProps> {
     public render(): React.ReactNode {
         return null;
     }
+
+    private calculateLogarithmicVolume() {
+        return Math.pow(2, this.props.volume * VOLUME_SLOPE) / Math.pow(2, VOLUME_SLOPE);
+    }
 }
 
 export interface AudioPlayerProps extends PlayerState {
     finishListener: () => void;
 }
+
+const VOLUME_SLOPE = 5;
