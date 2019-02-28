@@ -15,14 +15,18 @@ export class AssetsRepository {
 
     @observable
     public musicCategories: string[] = [];
+    @observable
+    public creatureIcons: string[] = [];
 
     constructor() {
         this.refreshData();
     }
 
     public async refreshData(): Promise<void> {
-        const response = await axios.get(serverRequest("musicCollections"));
-
+        let response = await axios.get(serverRequest("musicCollections"));
         this.musicCategories = response.data;
+
+        response = await axios.get(serverRequest("creatureIcons"));
+        this.creatureIcons = response.data;
     }
 }

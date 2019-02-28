@@ -22,6 +22,10 @@ router.get("/musicCollections", async (ctx) => {
     });
 });
 
+router.get("/creatureIcons", async (ctx) => {
+    ctx.body = fs.readdirSync(config.creatureIconsPath);
+});
+
 router.get("/musicList*", async (ctx) => {
     const category = ctx.query.category;
     if (!category) {
