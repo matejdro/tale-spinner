@@ -5,6 +5,7 @@ import * as React from "react";
 import {InitiativeEntry} from "../../../common/src/Initiative";
 import {AssetsRepository} from "../logic/AssetsRepository";
 import {InitiativeController} from "../logic/InitiativeController";
+import {serverRequest} from "../logic/ServerConnection";
 
 @observer
 class LocalInitiativeCard extends React.Component<InitiativeCardProps, InitiativeEditorState> {
@@ -112,10 +113,11 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
 
                 <Button onClick={this.advanceSelector} text="Next" className="mb-10"/>
 
-                {this.creatureIconNames.join(" ")}
+                {this.creatureIconNames.join(" | ")}
             </Card>
         );
     }
+
     private handleTextChange = (field: string) => (event: React.FormEvent<HTMLInputElement>) => {
         this.setState({[field]: event.currentTarget.value} as any);
     }
@@ -180,6 +182,7 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
 
         const newEntry: InitiativeEntry = {
             name: this.state.name,
+            iconUrl: this.getIcon(this.state.name),
             friendly: this.state.friendly,
             initiative: newInitiativeValue,
             visible: this.state.visible,
@@ -189,6 +192,7 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
 
         const field = this.nameTextFieldRef.current;
         if (field != null) {
+            field.focus();
             field.setSelectionRange(0, field.value.length);
         }
     }
@@ -211,6 +215,19 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
     @action
     private advanceSelector = () => {
         this.props.initiativeController.advanceSelector();
+    }
+
+    private getIcon(name: string): string | undefined {
+        name = name.toLowerCase();
+
+        for (const [index, icon] of this.creatureIconNames.entries()) {
+            if (name.startsWith(icon.toLowerCase())) {
+                const iconName = this.props.assetsRepository.creatureIcons[index as number];
+                return serverRequest(`creatures/${iconName}`);
+            }
+        }
+
+        return undefined;
     }
 
     @computed
