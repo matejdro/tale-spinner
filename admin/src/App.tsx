@@ -1,7 +1,7 @@
 import {Provider} from "mobx-react";
 import React, {Component} from "react";
 import "./App.css";
-import {AudioRepository} from "./logic/AudioRepository";
+import {AssetsRepository} from "./logic/AssetsRepository";
 import {InitiativeController} from "./logic/InitiativeController";
 import {MusicAudioPlayer} from "./logic/MusicAudioPlayer";
 import {SocketClient} from "./logic/SocketClient";
@@ -12,7 +12,7 @@ import {MusicController} from "./ui/MusicController";
 // Disable tslint temporarily
 // tslint:disable-next-line
 class App extends Component<{}, {}> {
-    private audioRepository: AudioRepository = new AudioRepository();
+    private audioRepository: AssetsRepository = new AssetsRepository();
     private musicPlayer: MusicAudioPlayer = new MusicAudioPlayer(this.audioRepository);
 
     private initiativeController: InitiativeController = new InitiativeController();

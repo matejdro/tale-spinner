@@ -1,22 +1,22 @@
 import {observable} from "mobx";
 import {shuffle} from "../utils/Shuffle";
+import {AssetsRepository} from "./AssetsRepository";
 import {AudioPlayer, QueueEntry} from "./AudioPlayer";
-import {AudioRepository} from "./AudioRepository";
 import {serverRequest} from "./ServerConnection";
 
 export class MusicAudioPlayer extends AudioPlayer {
     @observable
     public currentCategory?: string;
 
-    private musicRepository: AudioRepository;
+    private assetsRepository: AssetsRepository;
 
-    constructor(musicRepository: AudioRepository) {
+    constructor(assetsRepository: AssetsRepository) {
         super();
-        this.musicRepository = musicRepository;
+        this.assetsRepository = assetsRepository;
     }
 
     public async playCategory(categoryName: string) {
-        const musicFiles = await AudioRepository.getItems(categoryName);
+        const musicFiles = await AssetsRepository.getMusicFiles(categoryName);
 
         const musicMapped = musicFiles.map(
             (fileName) => {

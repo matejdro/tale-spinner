@@ -2,8 +2,8 @@ import axios from "axios";
 import {observable} from "mobx";
 import {serverRequest} from "./ServerConnection";
 
-export class AudioRepository {
-    public static async getItems(category: string): Promise<string[]> {
+export class AssetsRepository {
+    public static async getMusicFiles(category: string): Promise<string[]> {
         const response = await axios.get(serverRequest("musicList"), {
             params: {
                 category,
@@ -12,14 +12,15 @@ export class AudioRepository {
 
         return response.data;
     }
+
     @observable
     public musicCategories: string[] = [];
 
     constructor() {
-        this.refreshCategories();
+        this.refreshData();
     }
 
-    public async refreshCategories(): Promise<void> {
+    public async refreshData(): Promise<void> {
         const response = await axios.get(serverRequest("musicCollections"));
 
         this.musicCategories = response.data;

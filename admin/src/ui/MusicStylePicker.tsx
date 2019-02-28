@@ -1,9 +1,9 @@
 import {Button, ButtonGroup} from "@blueprintjs/core";
 import {inject, observer} from "mobx-react";
 import * as React from "react";
-import {AudioRepository} from "../logic/AudioRepository";
-import {MusicAudioPlayer} from "../logic/MusicAudioPlayer";
 import {ComponentWithClassName} from "../../../common/src/ComponentWithClassName";
+import {AssetsRepository} from "../logic/AssetsRepository";
+import {MusicAudioPlayer} from "../logic/MusicAudioPlayer";
 
 @inject("audioRepository", "musicPlayer")
 @observer
@@ -38,6 +38,6 @@ export class MusicStylePicker extends React.Component<MusicStylePickerProps> {
 }
 
 export interface MusicStylePickerProps extends ComponentWithClassName {
-    audioRepository?: AudioRepository;
+    audioRepository?: AssetsRepository;
     musicPlayer?: MusicAudioPlayer;
 }
