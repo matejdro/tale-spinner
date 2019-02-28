@@ -5,7 +5,7 @@ import {ComponentWithClassName} from "../../../common/src/ComponentWithClassName
 import {AssetsRepository} from "../logic/AssetsRepository";
 import {MusicAudioPlayer} from "../logic/MusicAudioPlayer";
 
-@inject("audioRepository", "musicPlayer")
+@inject("assetsRepository", "musicPlayer")
 @observer
 export class MusicStylePicker extends React.Component<MusicStylePickerProps> {
     constructor(props: Readonly<MusicStylePickerProps>) {
@@ -15,7 +15,7 @@ export class MusicStylePicker extends React.Component<MusicStylePickerProps> {
     public render(): React.ReactNode {
         const currentCategory = this.props.musicPlayer!.currentCategory;
 
-        const buttons = this.props.audioRepository!.musicCategories.map((categoryName) => {
+        const buttons = this.props.assetsRepository!.musicCategories.map((categoryName) => {
             const intent = currentCategory === categoryName ? "primary" : "none";
 
             return (
@@ -38,6 +38,6 @@ export class MusicStylePicker extends React.Component<MusicStylePickerProps> {
 }
 
 export interface MusicStylePickerProps extends ComponentWithClassName {
-    audioRepository?: AssetsRepository;
+    assetsRepository?: AssetsRepository;
     musicPlayer?: MusicAudioPlayer;
 }

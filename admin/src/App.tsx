@@ -12,8 +12,8 @@ import {MusicController} from "./ui/MusicController";
 // Disable tslint temporarily
 // tslint:disable-next-line
 class App extends Component<{}, {}> {
-    private audioRepository: AssetsRepository = new AssetsRepository();
-    private musicPlayer: MusicAudioPlayer = new MusicAudioPlayer(this.audioRepository);
+    private assetsRepository: AssetsRepository = new AssetsRepository();
+    private musicPlayer: MusicAudioPlayer = new MusicAudioPlayer(this.assetsRepository);
 
     private initiativeController: InitiativeController = new InitiativeController();
 
@@ -31,7 +31,7 @@ class App extends Component<{}, {}> {
             <>
                 <Provider
                     musicPlayer={this.musicPlayer}
-                    audioRepository={this.audioRepository}
+                    assetsRepository={this.assetsRepository}
                     initiativeController={this.initiativeController}
                 >
                     <>

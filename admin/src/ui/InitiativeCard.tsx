@@ -1,13 +1,15 @@
-import {Button, Card, Switch} from "@blueprintjs/core";
-import {action} from "mobx";
+import {Button, Card, MenuItem, Switch} from "@blueprintjs/core";
+import {ItemPredicate, ItemRenderer, Suggest} from "@blueprintjs/select";
+import {action, computed} from "mobx";
 import {inject, observer} from "mobx-react";
 import * as React from "react";
 import {InitiativeEntry} from "../../../common/src/Initiative";
+import {AssetsRepository} from "../logic/AssetsRepository";
 import {InitiativeController} from "../logic/InitiativeController";
 
 @observer
 class LocalInitiativeCard extends React.Component<InitiativeCardProps, InitiativeEditorState> {
-    private nameTextFieldRef = React.createRef<HTMLInputElement>();
+    private nameTextFieldRef = React.createRef<Suggest<string>>();
     private initiativeTextFieldRef = React.createRef<HTMLInputElement>();
 
     constructor(props: InitiativeCardProps) {
@@ -61,13 +63,26 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
                 </h5>
 
                 <div className="horizontal-flex mb-20">
-                    <input
+                    {/*<input*/}
+                    {/*className="mr-10"*/}
+                    {/*ref={this.nameTextFieldRef}*/}
+                    {/*value={this.state.name}*/}
+                    {/*onKeyDown={this.handleKeyEvent}*/}
+                    {/*placeholder="Test"*/}
+                    {/*onChange={this.handleTextChange("name")}*/}
+                    {/*/>*/}
+                    <Suggest
                         className="mr-10"
                         ref={this.nameTextFieldRef}
-                        value={this.state.name}
-                        onKeyDown={this.handleKeyEvent}
-                        placeholder="Test"
-                        onChange={this.handleTextChange("name")}
+                        query={this.state.name}
+                        onQueryChange={this.handleStringChange("name")}
+                        items={this.creatureIconNames}
+                        inputValueRenderer={this.renderStringValue}
+                        itemRenderer={this.renderString}
+                        itemPredicate={this.filterString}
+                        onItemSelect={this.handleStringChange("name")}
+                        resetOnQuery={true}
+
                     />
 
                     <input
@@ -110,12 +125,17 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
                 <Button onClick={this.clear} text="Clear" className="mb-20"/>
 
                 <Button onClick={this.advanceSelector} text="Next"/>
-
             </Card>
         );
     }
+
     private handleTextChange = (field: string) => (event: React.FormEvent<HTMLInputElement>) => {
         this.setState({[field]: event.currentTarget.value} as any);
+    }
+
+    private handleStringChange = (field: string) => (text: string) => {
+        console.log("SS ", text)
+        this.setState({[field]: text} as any);
     }
 
     @action
@@ -187,8 +207,7 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
 
         const field = this.nameTextFieldRef.current;
         if (field != null) {
-            field.focus();
-            field.setSelectionRange(0, field.value.length);
+            //field.setSelectionRange(0, field.value.length);
         }
     }
 
@@ -211,6 +230,33 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
     private advanceSelector = () => {
         this.props.initiativeController.advanceSelector();
     }
+
+    @computed
+    private get creatureIconNames(): string[] {
+        return this.props.assetsRepository.creatureIcons
+            .map((item) => item.substr(0, item.indexOf(".")));
+    }
+
+    private renderStringValue = (text: string) => text;
+    private renderString: ItemRenderer<string> = (text, {handleClick, modifiers, query}) => {
+        if (!modifiers.matchesPredicate) {
+            return null;
+        }
+
+        return (
+            <MenuItem
+                active={modifiers.active}
+                disabled={modifiers.disabled}
+                key={text}
+                onClick={handleClick}
+                text={text}
+            />
+        );
+    }
+
+    private filterString: ItemPredicate<string> = (query, text) => {
+        return text.toLowerCase().indexOf(query.toLowerCase()) >= 0;
+    }
 }
 
 interface InitiativeEditorState {
@@ -223,6 +269,7 @@ interface InitiativeEditorState {
 
 export interface InitiativeCardProps {
     initiativeController: InitiativeController;
+    assetsRepository: AssetsRepository;
 }
 
 export const InitiativeCard = inject((stores: InitiativeCardProps) => ({
