@@ -49,7 +49,14 @@ export class InitiativeController {
     }
 
     public advanceSelector() {
-        const next = (this.initiative.selectedIndex + 1) % this.initiative.entries.length;
+        const entries = this.initiative.entries;
+        const cur = this.initiative.selectedIndex;
+
+        let next = (cur + 1) % entries.length;
+
+        while (next !== cur && !entries[next].visible) {
+            next = (next + 1) % entries.length;
+        }
 
         this.initiative = {
             ...this.initiative,
