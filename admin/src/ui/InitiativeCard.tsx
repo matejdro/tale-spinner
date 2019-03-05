@@ -175,7 +175,9 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
                 modifier = -modifier;
             }
 
-            newInitiativeValue = Math.max(0, Math.floor(Math.random() * 20 + 1) + modifier + modifier / 100.0);
+            const abilityScore = (modifier * 2) + 10;
+
+            newInitiativeValue = Math.max(0, Math.floor(Math.random() * 20 + 1) + modifier + abilityScore / 100.0);
         } else {
             newInitiativeValue = parseFloat(initiativeText);
         }
