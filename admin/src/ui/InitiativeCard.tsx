@@ -130,11 +130,12 @@ class LocalInitiativeCard extends React.Component<InitiativeCardProps, Initiativ
     @action
     private editAt = (index: number) => () => {
         const initiativeController = this.props.initiativeController;
-        const {name, friendly, initiative} = initiativeController.initiative.entries[index];
+        const {name, friendly, initiative, visible} = initiativeController.initiative.entries[index];
 
         this.setState({
             name,
             friendly,
+            visible,
             initiative: initiative.toString(),
         });
 
